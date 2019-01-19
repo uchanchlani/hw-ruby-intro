@@ -83,15 +83,28 @@ end
 # Part 2
 
 def hello(name)
-  # YOUR CODE HERE
+  return "Hello, " + name
 end
 
 def starts_with_consonant? s
-  # YOUR CODE HERE
+  if s.length < 1
+    return false
+  end
+  letter = s[0].capitalize
+  if letter < "A" or letter > "Z"
+    return false
+  end
+  return !%w(A E I O U).include?(letter)
 end
 
 def binary_multiple_of_4? s
-  # YOUR CODE HERE
+  unless /^[01]+$/.match(s)
+    return false
+  end
+  if s == "0"
+    return true
+  end
+  return s[s.length-2, 2] == "00"
 end
 
 # Part 3
