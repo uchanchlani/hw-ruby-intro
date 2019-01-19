@@ -11,24 +11,33 @@ def sum arr
 end
 
 def max_2_sum arr
+  # a stores the highest elem received so far
   a = nil
+  # b stores the second highest elem received so far
   b = nil
   arr.each do |elem|
+    # if a is not yet set, set it, used to store first elem
     if a==nil
       a=elem
+
+    # if b is not yet set, set it, used to store second elem
+    # or if the curr elem found is greater than b then it is either highest or second highest
     elsif b==nil or b<elem
       b=elem
+      # if the curr elem found is even greater than a then swap the two to maintain definition of a and b
+      if a<b
+        a,b=b,a
+      end
     end
 
-    if a!=nil and b!=nil and a<b
-      a,b=b,a
-    end
   end
 
+  # mostly because there were no elems in the array
   if a==nil
     a=0
-  end
-  if b==nil
+    b=0
+  # only 1 elem present in the array
+  elsif b==nil
     b=0
   end
   return a+b
@@ -87,44 +96,62 @@ def hello(name)
 end
 
 def starts_with_consonant? s
+  # empty string returns false by default
   if s.length < 1
     return false
   end
+  # capitalize so that we deal with only capitals
   letter = s[0].capitalize
+
+  # if out of bound i.e. not a valid english alphabet, return false
   if letter < "A" or letter > "Z"
     return false
   end
+
+  # if vowel return false else true
   return !%w(A E I O U).include?(letter)
 end
 
 def binary_multiple_of_4? s
+  # check for invalid string by regex match
   unless /^[01]+$/.match(s)
     return false
   end
+
+  # special case when the string is of length 1 and it is 0
   if s == "0"
     return true
   end
+
+  # check last 2 char if 0 then multiple of 4
   return s[s.length-2, 2] == "00"
 end
 
 # Part 3
 
 class BookInStock
+  # getter and setter
   attr_accessor :isbn, :price
   @isbn
   @price
 
   def initialize(isbn, price)
+    # check arg error for isbn
     if isbn.length==0
       raise ArgumentError, "empty isbn"
     end
+
+    # check arg error for price
     if price <= 0.0
       raise ArgumentError, "price incorrect"
     end
+
+    #using setter of isbn rather then directly setting it
     self.isbn = isbn
     self.price = price
   end
 
+  # using string formatter
   def price_as_string
     return "$%.2f" % @price
   end
